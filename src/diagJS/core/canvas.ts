@@ -1,9 +1,6 @@
 import Konva from "konva";
 import { Renderable } from "../interface";
 import { CoreCanvasGrid } from "./grid";
-import { UndoManager, ChangedEvent, ChangeType } from "../transaction";
-import { GraphLinksModel } from "../model";
-import { Node } from "./node";
 
 export class CoreCanvas {
   stage: Konva.Stage;
@@ -14,9 +11,8 @@ export class CoreCanvas {
   div: HTMLDivElement;
   grid?: CoreCanvasGrid;
   gridOptions?: Partial<CoreCanvasGrid>
+  layerCount: number;
   components: Renderable[] = []; // sort by layerNo (without Grid Layer)
-  model: GraphLinksModel = new GraphLinksModel();
-  readonly undoManager: UndoManager = new UndoManager();
   
   // Node/Link management
   nodes: Map<string, Node> = new Map();
@@ -38,6 +34,8 @@ export class CoreCanvas {
     this.height = options?.height ? options.height : 500;
     this.maxWidth = options?.maxWidth ? options.maxWidth : this.width;
     this.maxHeight = options?.maxHeight ? options.maxHeight : this.height;
+
+    this.layerCount = 0;
 
     this.stage = new Konva.Stage({
       container: divId,

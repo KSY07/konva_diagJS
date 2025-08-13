@@ -14,10 +14,12 @@ export abstract class Renderable {
     id: string = "";
     layer: Konva.Layer;
     layerNo: number;
-    //bounds?: () => Konva.Rect | { x: number; y: number; width: number; height: number};
     abstract render(): void;
 
-    constructor(type: RenderableType) {
+    constructor(type: RenderableType, layerNo: number) {
+        this.layer = new Konva.Layer();
+        this.layerNo = layerNo;
+        
         switch(type) {
             case RenderableType.Grid:
                 this.id = generateId("grid");
