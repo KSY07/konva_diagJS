@@ -1,6 +1,7 @@
 import Konva from "konva";
 import { Renderable } from "../interface";
 import { CoreCanvasGrid } from "./grid";
+import { CoreModel } from "./model";
 
 export class CoreCanvas {
   stage: Konva.Stage;
@@ -13,13 +14,7 @@ export class CoreCanvas {
   gridOptions?: Partial<CoreCanvasGrid>
   layerCount: number;
   components: Renderable[] = []; // sort by layerNo (without Grid Layer)
-  
-  // Node/Link management
-  nodes: Map<string, Node> = new Map();
-  // Templates
-  nodeTemplates: Map<string, Konva.Shape> = new Map();
-  // Selection
-  selectedNodes: Set<Node> = new Set();
+  model: CoreModel = new CoreModel();
 
   constructor(divId: string, options?: Partial<CoreCanvas>) {
     const selectDiv = document.querySelector(`#${divId}`);

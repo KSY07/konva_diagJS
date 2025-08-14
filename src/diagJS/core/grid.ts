@@ -14,7 +14,7 @@ export class CoreCanvasGrid extends Renderable {
   darkBackgroundColor?: string;
 
   constructor(canv: CoreCanvas, gridOptions?: Partial<CoreCanvasGrid>) {
-    super(RenderableType.Grid);
+    super(RenderableType.Grid, -1);
     this.canvas = canv;
     this.layerNo = -1; // Grid is Absoultely Lowest Layer
     this.majorGridMargin = gridOptions?.majorGridMargin ?? 50;
@@ -39,11 +39,6 @@ export class CoreCanvasGrid extends Renderable {
     
     if (this.isVisible) {
       this.layer.destroyChildren();
-      
-      const scaleX = this.canvas.stage?.scaleX() || 1;
-      const scaleY = this.canvas.stage?.scaleY() || 1;
-      const offX = this.canvas.stage?.x() || 0;
-      const offY = this.canvas.stage?.y() || 0;
 
       const major = this.majorGridMargin!;
       const minor = this.minorGridMargin!;

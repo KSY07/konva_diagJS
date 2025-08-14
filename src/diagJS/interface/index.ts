@@ -1,5 +1,14 @@
 import Konva from "konva";
 import { generateId } from "../utils/utils";
+import type { CoreModel } from "../core/model";
+
+export interface Observable {
+    observe(): void;
+}
+
+export interface Observer {
+
+}
 
 export enum RenderableType {
     Grid = 1, // Grid should be located at the back of the layers.
@@ -13,13 +22,13 @@ export enum RenderableType {
 export abstract class Renderable {
     id: string = "";
     layer: Konva.Layer;
-    layerNo: number;
+    layerNo: number; // Grid = -1
     abstract render(): void;
 
     constructor(type: RenderableType, layerNo: number) {
         this.layer = new Konva.Layer();
         this.layerNo = layerNo;
-        
+
         switch(type) {
             case RenderableType.Grid:
                 this.id = generateId("grid");
@@ -32,4 +41,9 @@ export abstract class Renderable {
                 break;
         }
     }
+}
+
+export interface CanvasSnapshot {
+    stage: Konva.Stage;
+    model: CoreModel;
 }
